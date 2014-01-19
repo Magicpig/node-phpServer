@@ -1,0 +1,12 @@
+{
+  "name": "nw-tests",
+  "version": "0.1.0",
+  "main": "server.html",
+  "window": {
+  	"width":800,
+  	"height":600,
+    "position": "center"
+    // "show": false
+  },
+  "runAsAdmin":true
+}
