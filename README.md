@@ -8,7 +8,15 @@ start server:
 node phpServer.js 
 
 
- 
+This module is a stripped down version of this https://github.com/Magicpig/connect-fastcgi 
+modified to support POST 、 PUT 、 binary
+
+support upload big file 
+
+
+use binary transfer 
+
+catch 502 、404 status 
 
 
 ### step 1
@@ -65,6 +73,6 @@ node phpServer.js
 
 You need to start fpm.js  in  Windows
 
-### step 3
+### step 4
 visit http://test.com
 
