@@ -22,7 +22,9 @@ Modify  your host file
 ### step 2
 
 
-###  
+create vhost file to vhost/test.com.js 
+
+### vhost/test.com.js
 	var testapp = connect();// http://version.artron.net/
 	testapp.use(function (req, res, next) {
 	    console.log('vhost is versionapp'.error);
@@ -62,4 +64,7 @@ Modify  your host file
 node phpServer.js
 
 You need to start fpm.js  in  Windows
+
+### step 3
+visit http://test.com
 
