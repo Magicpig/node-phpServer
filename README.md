@@ -33,6 +33,7 @@ Modify  your host file
 create vhost file to vhost/test.com.js 
 
 ### vhost/test.com.js
+```javascript
 	var testapp = connect();// http://version.artron.net/
 	testapp.use(function (req, res, next) {
 	    console.log('vhost is versionapp'.error);
@@ -66,6 +67,7 @@ create vhost file to vhost/test.com.js
 
 	//vhost configure
 	app.use(connect.vhost('test.com', testapp)); //vhost config
+```
 ### step 3
 
 
