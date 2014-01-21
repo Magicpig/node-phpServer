@@ -6,7 +6,7 @@
     </list>
     <ignored path="node-phpServer.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="52ce2550-fd82-4e4e-b030-6aa65270bb41" time="1390298533893" ignored="false" />
+    <file path="/Dummy.txt" changelist="52ce2550-fd82-4e4e-b030-6aa65270bb41" time="1390298594499" ignored="false" />
     <file path="/request.js" changelist="52ce2550-fd82-4e4e-b030-6aa65270bb41" time="1390294633965" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,7 +30,7 @@
       <file leaf-file-name="fpm.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fpm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="23" selection-start="225" selection-end="225" vertical-scroll-proportion="0.21755253">
+            <state line="20" column="0" selection-start="516" selection-end="516" vertical-scroll-proportion="0.54522926">
               <folding />
             </state>
           </provider>
@@ -185,13 +185,18 @@
       <created>1390290942206</created>
       <updated>1390290942206</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="格式化代码">
+      <created>1390298597100</created>
+      <updated>1390298597100</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1680" height="955" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -206,7 +211,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -284,7 +288,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fpm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="23" selection-start="225" selection-end="225" vertical-scroll-proportion="0.21755253">
+        <state line="20" column="0" selection-start="516" selection-end="516" vertical-scroll-proportion="0.54522926">
           <folding />
         </state>
       </provider>
