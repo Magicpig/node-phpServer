@@ -49,7 +49,6 @@ if (cluster.isMaster) {
                 continue;
             }
             var appConfig = fs.readFileSync('vhost/' + vhostFiles[i], {encoding: 'utf8'});
-//            console.log(appConfig);
             try {
                 eval(appConfig);
             } catch (e) {
