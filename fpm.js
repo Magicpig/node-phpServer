@@ -10,6 +10,7 @@ var fastCgiIniPath = 'c:\\Program Files (x86)\\PHP\\php.ini';
 var fastCgiArg = ['-b',fastCgiListen,'-c',fastCgiIniPath];
 var _ = require('underscore');
 
+
 var fpm = {
 	fastCgiPool:new Array(),
 	fastCgiNum : 10,//默认启动多少个fastCgi
