@@ -53,7 +53,7 @@ if (cluster.isMaster) {
             try {
                 eval(appConfig);
             } catch (e) {
-                console.log(e);
+                console.log(+' in the file ' + vhostFiles[i]);
             }
         }
     }
