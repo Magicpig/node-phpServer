@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="52ce2550-fd82-4e4e-b030-6aa65270bb41" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/node-phpServer.iml" afterPath="$PROJECT_DIR$/.idea/node-phpServer.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="node-phpServer.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="52ce2550-fd82-4e4e-b030-6aa65270bb41" time="1390290188012" ignored="false" />
+    <file path="/Dummy.txt" changelist="52ce2550-fd82-4e4e-b030-6aa65270bb41" time="1390290939340" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +29,7 @@
       <file leaf-file-name="phpServer.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/phpServer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="23" selection-start="629" selection-end="629" vertical-scroll-proportion="0.41561714">
+            <state line="18" column="28" selection-start="721" selection-end="721" vertical-scroll-proportion="0.49874055">
               <folding />
             </state>
           </provider>
@@ -181,7 +179,11 @@
       <created>1390290197656</created>
       <updated>1390290197656</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="格式化代码">
+      <created>1390290942206</created>
+      <updated>1390290942206</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -280,7 +282,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/phpServer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="23" selection-start="629" selection-end="629" vertical-scroll-proportion="0.41561714">
+        <state line="18" column="28" selection-start="721" selection-end="721" vertical-scroll-proportion="0.49874055">
           <folding />
         </state>
       </provider>
