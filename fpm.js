@@ -2,6 +2,7 @@
 *
 *用于在windows系统下面守护 fast-cgi进程，保证web服务正常运行
 **/
+
 var spawn = require('child_process').spawn;
 var fastCgiCmd = "C:\\Program Files (x86)\\php-5.5.8\\php-cgi.exe";
 var fastCgiListen = '127.0.0.1:9123';
