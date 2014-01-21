@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="52ce2550-fd82-4e4e-b030-6aa65270bb41" name="Default" comment="" />
+    <list default="true" id="52ce2550-fd82-4e4e-b030-6aa65270bb41" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/node-phpServer.iml" afterPath="$PROJECT_DIR$/.idea/node-phpServer.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="node-phpServer.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="52ce2550-fd82-4e4e-b030-6aa65270bb41" time="1390290188012" ignored="false" />
@@ -27,7 +31,7 @@
       <file leaf-file-name="phpServer.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/phpServer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="8" selection-start="878" selection-end="878" vertical-scroll-proportion="0.47103274">
+            <state line="15" column="23" selection-start="629" selection-end="629" vertical-scroll-proportion="0.41561714">
               <folding />
             </state>
           </provider>
@@ -112,7 +116,7 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
   </component>
@@ -276,7 +280,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/phpServer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="8" selection-start="878" selection-end="878" vertical-scroll-proportion="0.47103274">
+        <state line="15" column="23" selection-start="629" selection-end="629" vertical-scroll-proportion="0.41561714">
           <folding />
         </state>
       </provider>
