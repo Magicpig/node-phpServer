@@ -12,7 +12,7 @@ colors.setTheme({silly: 'rainbow', input: 'grey', verbose: 'cyan', prompt: 'grey
 
 if (cluster.isMaster) {
     // Fork workers.
-    for (var i = 0; i < numCPUs * 2; i++) {
+    for (var i = 0; i < numCPUs * 1; i++) {
         cluster.fork();
     }
     cluster.on('exit', function (worker, code, signal) {

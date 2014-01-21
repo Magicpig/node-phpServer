@@ -4,9 +4,19 @@
 **/
 
 var spawn = require('child_process').spawn;
+var fs = require("fs");
 var fastCgiCmd = "C:\\Program Files (x86)\\php-5.5.8\\php-cgi.exe";
+
+if (!fs.existsSync(fastCgiCmd)){
+	console.log('can\'t found ' + fastCgiCmd);
+	process.exit();
+}
 var fastCgiListen = '127.0.0.1:9123';
-var fastCgiIniPath = 'c:\\Program Files (x86)\\PHP\\php.ini';
+var fastCgiIniPath = 'c:\\Program Files (x86)\\php-5.5.8\\php.ini';
+if (!fs.existsSync(fastCgiIniPath)){
+	console.log('can\'t found ' + fastCgiIniPath);
+	process.exit();
+}
 var fastCgiArg = ['-b',fastCgiListen,'-c',fastCgiIniPath];
 var _ = require('underscore');
 
