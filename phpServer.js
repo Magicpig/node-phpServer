@@ -41,10 +41,10 @@ if (cluster.isMaster) {
 
     var vhostFiles = fs.readdirSync('vhost/');
     if (vhostFiles && vhostFiles.length > 0) {
-        for (var i = 0; i <vhostFiles.length; i++) {
+        for (var i = 0; i < vhostFiles.length; i++) {
             var fileName = vhostFiles[i];
             var extName = path.extname(fileName);
-            if (extName!='.js'){
+            if (extName != '.js') {
                 // console.log('ignore '+ fileName+' vhost file ,   is not  js file');
                 continue;
             }
