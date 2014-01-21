@@ -15,7 +15,6 @@ if (cluster.isMaster) {
     for (var i = 0; i < numCPUs * 2; i++) {
         cluster.fork();
     }
-
     cluster.on('exit', function (worker, code, signal) {
         var message = 'worker ' + worker.process.pid + ' died';
         console.log(message);
@@ -42,10 +41,10 @@ if (cluster.isMaster) {
 
     var vhostFiles = fs.readdirSync('vhost/');
     if (vhostFiles && vhostFiles.length > 0) {
-        for (var i = 0; i <vhostFiles.length; i++) {
+        for (var i = 0; i < vhostFiles.length; i++) {
             var fileName = vhostFiles[i];
             var extName = path.extname(fileName);
-            if (extName!='.js'){
+            if (extName != '.js') {
                 // console.log('ignore '+ fileName+' vhost file ,   is not  js file');
                 continue;
             }
