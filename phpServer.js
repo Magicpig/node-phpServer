@@ -15,7 +15,6 @@ if (cluster.isMaster) {
     for (var i = 0; i < numCPUs * 2; i++) {
         cluster.fork();
     }
-
     cluster.on('exit', function (worker, code, signal) {
         var message = 'worker ' + worker.process.pid + ' died';
         console.log(message);
