@@ -7,7 +7,6 @@ analyticsApp.use(function (req, res, next) {
         port = hosts[1];
     }
     if (parseInt(port) == analyticsApp._listenPort) {
-        console.log('vhostOk');
         next();
     } else {
         app.def_vhost(req, res, next);
@@ -21,7 +20,7 @@ analyticsApp.use(rewriteModule.getMiddleware([
     {from: '^/rewriteTest-(.*)-(.*).html$', to: '/rewrite.php?id=$1&gid=$2'}
 ])
 );
-analyticsApp.use(connect.static('/var/webroot/analytics.artron.net/htdocs/', {index: 'i.html'}));//analytics 静态目录
+analyticsApp.use(connect.static('/var/webroot/test.artron.net/', {index: 'index.html'}));//analytics 静态目录
 
 analyticsApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
 analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
@@ -40,7 +39,7 @@ analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等
  **[3] 默认的php地址
  **/
 
-analyticsApp.use(phpParse.ParseFun('/var/webroot/analytics.artron.net/htdocs/', 'index.php', 'index.php', {
+analyticsApp.use(phpParse.ParseFun('/var/webroot/test.artron.net/', null, 'index.php', {
     fastcgiPort: 9001,
     fastcgiHost: '127.0.0.1'
 //    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'

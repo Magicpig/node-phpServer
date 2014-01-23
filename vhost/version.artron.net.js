@@ -7,7 +7,6 @@ versionapp.use(function (req, res, next) {//支持vhost 绑定不同端口
         port = hosts[1];
     }
     if (parseInt(port) == versionapp._listenPort) {
-        console.log('vhostOk');
         next();
     } else {
         app.def_vhost(req, res, next);
