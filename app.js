@@ -34,12 +34,11 @@ if (cluster.isMaster) {
         res.setHeader('X-Server', 'Artron Static Server');
         next();
     });
-    app.use(connect.static('www/', {index: 'index.html'}))
+
     app.def_vhost=function(req,res,next){
-       res.write('it\'s work');
+       res.write(fs.readFileSync('./www/index.html'));
        res.end();
     }
-
     var vhostFiles = fs.readdirSync('vhost/');
     if (vhostFiles && vhostFiles.length > 0) {
         for (var i = 0; i < vhostFiles.length; i++) {
@@ -60,7 +59,6 @@ if (cluster.isMaster) {
     }else{
         console.log('vhost is empty');
     }
-
 
     for (var i =0 ;i< config.listenPort.length;i++){
         app.listen(config.listenPort[i]);

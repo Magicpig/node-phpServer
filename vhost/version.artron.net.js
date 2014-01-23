@@ -1,16 +1,17 @@
 var versionapp = connect();// http://version.artron.net/
-analyticsApp._listenPort = 8080;
-analyticsApp.use(function (req, res, next) {//支持vhost 绑定不同端口
+versionapp._listenPort = 80;
+versionapp.use(function (req, res, next) {//支持vhost 绑定不同端口
     var hosts = req.headers.host.split(':')
     var port = 80;
     if (hosts[1]) {
         port = hosts[1];
     }
-    if (parseInt(port) == analyticsApp._listenPort) {
+    if (parseInt(port) == versionapp._listenPort) {
         console.log('vhostOk');
         next();
     } else {
         app.def_vhost(req, res, next);
+        return;
     }
 });
 versionapp.use(function (req, res, next) {
@@ -35,8 +36,8 @@ versionapp.use(function (req, res, next) {//处理非php的404  如 js css 等�
  **/
 versionapp.use(phpParse.ParseFun('/var/webroot/version.artron.net/htdocs/', 'index.php', 'index.php',{
     fastcgiPort: 9001,
-    fastcgiHost: '127.0.0.1',
-    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'
+    fastcgiHost: '127.0.0.1'
+//    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'
 }))//php所在文件
 
 versionapp.use(function(req,res,next){//如果 处理php 发生了404 ，则请求到这里继续进行处理

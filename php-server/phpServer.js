@@ -178,14 +178,14 @@ function server(request, response, params, options, next) {
             if (responseEnd == false) {
                 cgiConnectionClose = true;
                 try {
-                    response.writeHeader("502");
+                    response.setHeader("502");
                 }
                 catch (e) {
                     console.log(e);
                 }
 
                 responseEnd = true;
-                response.end();
+                next({status:502,stack:'php execute time out'});
             }
         }, 20000)//20秒后，如果facgcgi没有 发回响应包，则断开连接
     });
@@ -246,7 +246,7 @@ function server(request, response, params, options, next) {
                 if (responseStatus == "404") { //php返回404后交给next
                     // console.log('cgi is end');
                     cgiStdEnd = true;
-                    next();
+                    next({status:404,stack:'can\'t find php file'});
                     parser.onRecord = function () {
                     };
                     connection.end();
@@ -300,13 +300,12 @@ function server(request, response, params, options, next) {
         }
         if (responseEnd == false) {//连接cgi 出错的时候抛出502
             try {
-                response.writeHeader('502');
+                response.setHeader('502');
             } catch (e) {
 
             }
-
-            response.end();
             responseEnd = true;
+            next({status:502,stack:'can\'t connection fpm'});
         }
         connection.end();
     });
