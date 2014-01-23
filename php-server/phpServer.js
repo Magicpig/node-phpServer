@@ -161,8 +161,12 @@ function server(request, response, params, options, next) {
     var cgiTimeOutCheker = null;
     request.on('end', function () {
         //连接fpm处理数据
+        if (options.fastcgiSock && options.fastcgiSock!=''){
+            connection.connect(options.fastcgiSock);
+        }else{
+            connection.connect(options.fastcgiPort, options.fastcgiHost); //客户端发送数据结束后，连接fpm
+        }
 
-        connection.connect(options.fastcgiPort, options.fastcgiHost); //客户端发送数据结束后，连接fpm
         cgiTimeOutCheker = setTimeout(function () {
             if (cgiStdEnd == false) //如果cgi还没有结束 ，则断开与cgi的连接
             {
@@ -323,7 +327,7 @@ function getRequestIp(req) {
 function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
     var documentRoot = documentRoot;
     var php_self = php_self;
-    var defScript = defScript;
+    var defScript = defIndexScript;
     var cgiOption = cgiConfig;
     var connectParseFun = function (request, response, next) {
 

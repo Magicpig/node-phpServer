@@ -77,5 +77,6 @@ if (cluster.isMaster) {
             }
         }
     }
-    app.listen(config.listenPort);
+    app.listen(80);
+    app.listen(8080);
 }
