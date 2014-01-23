@@ -1,5 +1,5 @@
 var analyticsApp = connect(); //analytics 应用
-analyticsApp._listenPort = 8080;
+analyticsApp._listenPort = 80;
 analyticsApp.use(function (req, res, next) {
     var hosts = req.headers.host.split(':')
     var port = 80;
@@ -38,11 +38,28 @@ analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等
  **[2] 重写到的地址，比如所有的地址都重写到index.php
  **[3] 默认的php地址
  **/
-
-analyticsApp.use(phpParse.ParseFun('/var/webroot/test.artron.net/', null, 'index.php', {
-    fastcgiPort: 9001,
-    fastcgiHost: '127.0.0.1'
+var phpParseFun = function(req,res,next){
+    res.write('def');
+    res.end();
+    next();
+};
+analyticsApp.use(function(req,res,next){
+    if (req.url!='/jiandingshi'){
+        phpParseFun =  phpParse.ParseFun('/var/webroot/test.artron.net/', null, 'index.php', {
+            fastcgiPort: 9001,
+            fastcgiHost: '127.0.0.1'
 //    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'
-}));//
-
+        })
+    }else{
+        phpParseFun = phpParse.ParseFun('/var/webroot/analytics.artron.net/htdocs/', 'index.php', 'index.php', {
+            fastcgiPort: 9001,
+            fastcgiHost: '127.0.0.1'
+//    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'
+        })
+    }
+    next();
+});
+analyticsApp.use(function(req,res,next){
+    phpParseFun(req,res,next);
+});
 app.use(connect.vhost('analytics.artron.net', analyticsApp)); //vhost config
