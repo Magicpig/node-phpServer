@@ -1,4 +1,18 @@
 var versionapp = connect();// http://version.artron.net/
+analyticsApp._listenPort = 8080;
+analyticsApp.use(function (req, res, next) {//支持vhost 绑定不同端口
+    var hosts = req.headers.host.split(':')
+    var port = 80;
+    if (hosts[1]) {
+        port = hosts[1];
+    }
+    if (parseInt(port) == analyticsApp._listenPort) {
+        console.log('vhostOk');
+        next();
+    } else {
+        app.def_vhost(req, res, next);
+    }
+});
 versionapp.use(function (req, res, next) {
     console.log('vhost is versionapp'.error);
     next();

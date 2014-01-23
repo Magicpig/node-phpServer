@@ -2,32 +2,10 @@ var connect = require('connect');
 var url = require('url');
 var phpParse = require('./php-server/phpServer.js').phpParse;
 var cluster = require('cluster');
-var colors = require('colors');
 var path = require('path');
 var rewriteModule = require('http-rewrite-middleware');
 var fs = require('fs');
-colors.setTheme({
-    silly: 'rainbow',
-    input: 'grey',
-    verbose: 'cyan',
-    prompt: 'grey',
-    info: 'green',
-    data: 'grey',
-    help: 'cyan',
-    warn: 'yellow',
-    debug: 'blue',
-    error: 'red'
-});
-
-
-var config = {
-    workers: 2,
-    listenPort: 80,
-    workTitle: 'node_ArtronNodeWebWorker',
-    masterTitle: 'node_ArtronNodeWebMaster'
-}
-
-
+var config = require('./conf/serverConfig.js').config;
 
 if (cluster.isMaster) {
     for (var i = 0; i < config.workers; i++) {
@@ -56,7 +34,9 @@ if (cluster.isMaster) {
         res.setHeader('X-Server', 'Artron Static Server');
         next();
     });
-
+    app.def_vhost=function(req,res,next){
+        res.end();
+    }
 
     var vhostFiles = fs.readdirSync('vhost/');
     if (vhostFiles && vhostFiles.length > 0) {
@@ -64,7 +44,6 @@ if (cluster.isMaster) {
             var fileName = vhostFiles[i];
             var extName = path.extname(fileName);
             if (extName != '.js') {
-                // console.log('ignore '+ fileName+' vhost file ,   is not  js file');
                 continue;
             }
             var appConfig = fs.readFileSync('vhost/' + vhostFiles[i], {
@@ -76,7 +55,10 @@ if (cluster.isMaster) {
                 console.log(+' in the file ' + vhostFiles[i]);
             }
         }
+    }else{
+        console.log('vhost is empty');
     }
-    app.listen(80);
-    app.listen(8080);
+    for (var i =0 ;i< config.listenPort.length;i++){
+        app.listen(config.listenPort[i]);
+    }
 }
