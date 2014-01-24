@@ -6,6 +6,7 @@ var path = require('path');
 var rewriteModule = require('http-rewrite-middleware');
 var fs = require('fs');
 var config = require('./conf/serverConfig.js').config;
+var cwd = __dirname;
 
 process.title = config.workTitle;
 var app = connect();
@@ -29,7 +30,7 @@ app.def_vhost = function (req, res, next) {
     res.write(fs.readFileSync('./www/index.html'));
     res.end();
 }
-var vhostFiles = fs.readdirSync('vhost/');
+var vhostFiles = fs.readdirSync(cwd + '/vhost/');
 if (vhostFiles && vhostFiles.length > 0) {
     for (var i = 0; i < vhostFiles.length; i++) {
         var fileName = vhostFiles[i];
@@ -37,7 +38,7 @@ if (vhostFiles && vhostFiles.length > 0) {
         if (extName != '.js') {
             continue;
         }
-        var appConfig = fs.readFileSync('vhost/' + vhostFiles[i], {
+        var appConfig = fs.readFileSync(cwd+'/vhost/' + vhostFiles[i], {
             encoding: 'utf8'
         });
         try {
