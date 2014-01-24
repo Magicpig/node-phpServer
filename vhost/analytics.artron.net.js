@@ -12,17 +12,13 @@ analyticsApp.use(function (req, res, next) {
         app.def_vhost(req, res, next);
     }
 });
-analyticsApp.use(function (req, res, next) {
-    console.log('vhost is analyticsApp'.error);
-    next();
-});
 analyticsApp.use(rewriteModule.getMiddleware([
     {from: '^/rewriteTest-(.*)-(.*).html$', to: '/rewrite.php?id=$1&gid=$2'}
 ])
 );
 analyticsApp.use(connect.static('/var/webroot/test.artron.net/', {index: 'index.html'}));//analytics 静态目录
 
-analyticsApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
+//analyticsApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
 analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
     var extName = path.extname(url.parse(req.url).pathname);
     if (extName != '.php' && extName != '') {
@@ -47,14 +43,16 @@ analyticsApp.use(function(req,res,next){
     if (req.url!='/jiandingshi'){
         phpParseFun =  phpParse.ParseFun('/var/webroot/test.artron.net/', null, 'index.php', {
             fastcgiPort: 9001,
-            fastcgiHost: '127.0.0.1'
-//    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'
+            fastcgiHost: '127.0.0.1',
+            fastcgiSock: '/tmp/php-fpm.sock',
+            fastcgiTimeout:20000
         })
     }else{
         phpParseFun = phpParse.ParseFun('/var/webroot/analytics.artron.net/htdocs/', 'index.php', 'index.php', {
             fastcgiPort: 9001,
-            fastcgiHost: '127.0.0.1'
-//    fastcgiSock: '/dev/shm/php-fpm-discuz.sock'
+            fastcgiHost: '127.0.0.1',
+            fastcgiSock: '/tmp/php-fpm.sock',
+            fastcgiTimeout:20000
         })
     }
     next();

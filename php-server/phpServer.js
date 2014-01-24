@@ -160,6 +160,10 @@ function server(request, response, params, options, next) {
     });
     var cgiTimeOutCheker = null;
     request.on('end', function () {
+        var cgiTimeout  = 20000;
+        if (options.fastcgiTimeout && options.fastcgiTimeout!=''){
+            cgiTimeout = options.fastcgiTimeout;
+        }
         //连接fpm处理数据
         if (options.fastcgiSock && options.fastcgiSock!=''){
             connection.connect(options.fastcgiSock);
@@ -187,7 +191,7 @@ function server(request, response, params, options, next) {
                 responseEnd = true;
                 next({status:502,stack:'php execute time out'});
             }
-        }, 20000)//20秒后，如果facgcgi没有 发回响应包，则断开连接
+        }, cgiTimeout)//20秒后，如果facgcgi没有 发回响应包，则断开连接
     });
 
     connection.ondata = function (buffer, start, end) { //解析cgi的返回
@@ -263,7 +267,7 @@ function server(request, response, params, options, next) {
                 // sidOut = sidOut +1;
                 // console.log(TmpBuffer);
                 // var recordStdoutFileName = 'tmp/data_Stdout_' + sidOut + '_' + timestamp  + '_' + fastCgirecordId +'.txt';
-                fs.statSync('tmp/sidin.lock'); //同步传输，保证buffer安全
+                //fs.statSync('tmp/sidin.lock'); //同步传输，保证buffer安全
                 // var bufferBody = fs.readFileSync(recordStdoutFileName,{'encoding':'binary'});
                 bufferBody = null;
                 response.write(buffer);
