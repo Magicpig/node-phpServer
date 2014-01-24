@@ -16,7 +16,7 @@ analyticsApp.use(rewriteModule.getMiddleware([
     {from: '^/rewriteTest-(.*)-(.*).html$', to: '/rewrite.php?id=$1&gid=$2'}
 ])
 );
-analyticsApp.use(connect.static('/var/webroot/test.artron.net/', {index: 'index.html'}));//analytics 静态目录
+analyticsApp.use(connect.static('d:\\webroot\\', {index: 'index.html'}));//analytics 静态目录
 
 //analyticsApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
 analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
@@ -41,17 +41,17 @@ var phpParseFun = function(req,res,next){
 };
 analyticsApp.use(function(req,res,next){
     if (req.url!='/jiandingshi'){
-        phpParseFun =  phpParse.ParseFun('/var/webroot/test.artron.net/', null, 'index.php', {
-            fastcgiPort: 9001,
+        phpParseFun =  phpParse.ParseFun('d:\\webroot\\', null, 'index.php', {
+            fastcgiPort: 9123,
             fastcgiHost: '127.0.0.1',
-            fastcgiSock: '/tmp/php-fpm.sock',
+            //fastcgiSock: '/tmp/php-fpm.sock',
             fastcgiTimeout:20000
         })
     }else{
-        phpParseFun = phpParse.ParseFun('/var/webroot/analytics.artron.net/htdocs/', 'index.php', 'index.php', {
-            fastcgiPort: 9001,
+        phpParseFun = phpParse.ParseFun('d:\\webroot\\', 'index.php', 'index.php', {
+            fastcgiPort: 9123,
             fastcgiHost: '127.0.0.1',
-            fastcgiSock: '/tmp/php-fpm.sock',
+            //fastcgiSock: '/tmp/php-fpm.sock',
             fastcgiTimeout:20000
         })
     }

@@ -6,8 +6,12 @@ var path = require('path');
 var rewriteModule = require('http-rewrite-middleware');
 var fs = require('fs');
 var config = require('./conf/serverConfig.js').config;
+var child_process = require('child_process');
 var cwd = __dirname;
-
+var platform  = process.platform;
+if (platform == 'win32'){//如果环境为windows，则自动fork fpm
+    child_process.fork(cwd + '\\fpm.js');
+}
 process.title = config.workTitle;
 var app = connect();
 app.use(function (req, res, next) { //调试，观察处理请求的pid变化
