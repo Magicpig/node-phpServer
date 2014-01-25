@@ -23,10 +23,30 @@ analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等
     var extName = path.extname(url.parse(req.url).pathname);
     if (extName != '.php' && extName != '') {
         res.writeHeader(404);
-        console.log('静态404');
         res.end();
         return;
     }
+    next();
+});
+
+analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
+    console.log('1');
+    next();
+});
+analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
+    console.log('2');
+    next();
+});
+analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
+    console.log('3');
+    next();
+});
+analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
+    console.log('4');
+    next();
+});
+analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
+    console.log('5');
     next();
 });
 /**
@@ -60,4 +80,6 @@ analyticsApp.use(function(req,res,next){
 analyticsApp.use(function(req,res,next){
     phpParseFun(req,res,next);
 });
+
+
 app.use(connect.vhost('analytics.artron.net', analyticsApp)); //vhost config
