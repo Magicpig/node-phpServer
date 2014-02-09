@@ -58,3 +58,11 @@ if (vhostFiles && vhostFiles.length > 0) {
 for (var i = 0; i < config.listenPort.length; i++) {
     app.listen(config.listenPort[i]);
 }
+app.use(function (req, res, next) {
+    var err = {
+        status: 404,
+        stack: 'file is not found'
+    }
+    next(err);
+//    res.end(res.statusCode.toString());
+})

@@ -1,4 +1,4 @@
-var crcApp = connect(); //analytics 应用
+var crcApp = connect(); //crcapp
 crcApp._listenPort = 8080;
 crcApp.use(function (req, res, next) {
     var hosts = req.headers.host.split(':')
@@ -12,16 +12,17 @@ crcApp.use(function (req, res, next) {
         app.def_vhost(req, res, next);
     }
 });
-crcApp.use(connect.static('/data/webroot/crc.artron.net/htdocs/', {index: 'index.html'}));//analytics 静态目录
+crcApp.use(connect.static('/var/webroot/crc.artron.net/htdocs/'));//analytics 静态目录
 
 //crcApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
 crcApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
     var extName = path.extname(url.parse(req.url).pathname);
-    if (extName != '.php' && extName != '' && extName!='.html') {
-        res.writeHeader(404);
-        console.log('静态404');
-        res.end();
-        return;
+    if (extName != '.php' && extName != '' && extName != '.html') {
+        var err = {
+            status: 404,
+            stack: 'file is not found'
+        }
+        next(err);
     }
     next();
 });
@@ -35,28 +36,27 @@ var phpParseFun = function (req, res, next) {
     res.end();
     next();
 };
-crcApp.use(phpParse.ParseFun('/data/webroot/crc.artron.net/htdocs/', null, 'index.php', {
+crcApp.use(phpParse.ParseFun('/var/webroot/crc.artron.net/htdocs/', null, 'index.php', {
     fastcgiPort: 9001,
     fastcgiHost: '127.0.0.1',
-    fastcgiSock: '/dev/shm/php-fpm.sock',
+    fastcgiSock: '/tmp/php-fpm.sock',
     fastcgiTimeout: 20000
 }));
 crcApp.use(function (req, res, next) {
     var re = /\/jds(\d){1,10}/i;
-
-    console.log(re.test(req.url));
-    if (re.test(req.url) ===true ) {
-        phpParseFun = phpParse.ParseFun('/data/webroot/jiandingshi.artron.net/', 'index.php', 'index.php', {
+//    console.log(re.test(req.url));
+    if (re.test(req.url) === true) {
+        phpParseFun = phpParse.ParseFun('/var/webroot/jiandingshi.artron.net/', 'index.php', 'index.php', {
             fastcgiPort: 9001,
             fastcgiHost: '127.0.0.1',
-            fastcgiSock: '/dev/shm/php-fpm.sock',
+            fastcgiSock: '/tmp/php-fpm.sock',
             fastcgiTimeout: 20000
         })
     } else {
-        phpParseFun = phpParse.ParseFun('/data/webroot/crc.artron.net/htdocs/', 'cicrc.php', 'cicrc.php', {
+        phpParseFun = phpParse.ParseFun('/var/webroot/crc.artron.net/htdocs/', 'cicrc.php', 'cicrc.php', {
             fastcgiPort: 9001,
             fastcgiHost: '127.0.0.1',
-            fastcgiSock: '/dev/shm/php-fpm.sock',
+            fastcgiSock: '/tmp/php-fpm.sock',
             fastcgiTimeout: 20000
         })
     }

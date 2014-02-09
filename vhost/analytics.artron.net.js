@@ -20,10 +20,16 @@ analyticsApp.use(connect.static('/var/webroot/analytics.artron.net/htdocs/'));//
 
 //analyticsApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
 analyticsApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
+    console.log(url.parse(req.url).pathname);
+
+
     var extName = path.extname(url.parse(req.url).pathname);
     if (extName != '.php' && extName != '') {
-        res.writeHeader(404);
-        res.end();
+        var err = {
+            status: 404,
+            stack: 'file is not found'
+        }
+        next(err);
         return;
     }
     next();
