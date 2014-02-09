@@ -346,7 +346,7 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
         }
         // console.log(script_file);
         if (path.extname(script_file)!='.php'){
-            script_file = script_file + defScript;
+            script_file = script_file +'/'+ defScript;
         }
 
         if (php_self != '' && php_self != null) { //如果定义了url重写 ，则覆盖自动解析的scriptfile
@@ -354,6 +354,10 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
         }
 
         var qs = url.parse(request.url).query ? url.parse(request.url).query : '';
+        if (!fs.existsSync(script_dir.substr(0, script_dir.length - 1) + script_file)){
+            next();//文件不存在时，交给之后的处理
+            return;
+        }
         var params = makeHeaders(request.headers, [
             ["SCRIPT_FILENAME", script_dir.substr(0, script_dir.length - 1) + script_file],
             ["REMOTE_ADDR", request.connection.remoteAddress],
