@@ -1,5 +1,5 @@
 var config = {
-    listenPort: new Array(8080,8000),
+    listenPort: [80,8080],
     workTitle: 'node_ArtronNodeWebWorker'
 }
 exports.config = config;
