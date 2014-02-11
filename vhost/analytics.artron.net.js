@@ -49,7 +49,7 @@ analyticsApp.use(function (req, res, next) {
     phpParseFun = phpParse.ParseFun('/var/webroot/analytics.artron.net/htdocs/', 'index.php', 'index.php', {
         fastcgiPort: 9123,
         fastcgiHost: '127.0.0.1',
-        fastcgiSock: '/tmp/php-fpm.sock',
+        //fastcgiSock: '/tmp/php-fpm.sock',
         fastcgiTimeout: 20000
     })
 
