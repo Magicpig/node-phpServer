@@ -3,6 +3,7 @@ var fs = require('fs');
 var path = require("path");
 var http = require("http");
 var net = require("net");
+var os = require('os');
 var colors = require('colors');
 var sys = require("sys");
 var fastcgi = require("fastcgi-parser");
@@ -364,6 +365,7 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
             ["QUERY_STRING", qs],
             ["REQUEST_METHOD", request.method],
             // ["SCRIPT_NAME", script_file], //暂时屏蔽，有他得花 php_self 在php中打印出来不正常
+            ['SERVER_NAME',os.hostname()],
             ["PATH_INFO", script_file],
             ['SCRIPT_NAME',script_file],
             ["DOCUMENT_URI", script_file],
