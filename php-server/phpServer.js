@@ -95,8 +95,14 @@ function server(request, response, params, options, next) {
         var tmpBufferLength = 65536 - 8;
 
         var position = 0;
-        var fd = fs.openSync(postCacheName, 'r');
-        var postCacheFileLength = fs.lstatSync(postCacheName).size;
+        try {
+            var fd = fs.openSync(postCacheName, 'r');
+            var postCacheFileLength = fs.lstatSync(postCacheName).size;
+        } catch (e) {
+            var postCacheFileLength = 0;
+        }
+
+
         // console.log('++++++++++' + postCacheFileLength);//
         var testSize = 0;
         var bufferIndex = 0;
@@ -134,11 +140,15 @@ function server(request, response, params, options, next) {
                 writeSidinFastCgi(tmpBuffer);
             }
         }
-        fs.close(fd);
+        try{
+            fs.close(fd);
+        }catch(e){
+
+        }
         try {
             fs.unlinkSync(postCacheName)
         } catch (e) {
-            console.log(e)
+//            console.log(e)
         }
         ; //删除post 的缓存数据
         //发送一个cgi stdin结束的包  结束请求
@@ -161,14 +171,14 @@ function server(request, response, params, options, next) {
     });
     var cgiTimeOutCheker = null;
     request.on('end', function () {
-        var cgiTimeout  = 20000;
-        if (options.fastcgiTimeout && options.fastcgiTimeout!=''){
+        var cgiTimeout = 20000;
+        if (options.fastcgiTimeout && options.fastcgiTimeout != '') {
             cgiTimeout = options.fastcgiTimeout;
         }
         //连接fpm处理数据
-        if (options.fastcgiSock && options.fastcgiSock!=''){
+        if (options.fastcgiSock && options.fastcgiSock != '') {
             connection.connect(options.fastcgiSock);
-        }else{
+        } else {
             connection.connect(options.fastcgiPort, options.fastcgiHost); //客户端发送数据结束后，连接fpm
         }
 
@@ -176,8 +186,8 @@ function server(request, response, params, options, next) {
             if (cgiStdEnd == false) //如果cgi还没有结束 ，则断开与cgi的连接
             {
                 connection.end();
-            } 
-            if (cgiStdEnd == true){//cgi 执行已经完成，比如404 这个时候php已经处理完成，cgi结束，但是response 不应该结束，因为调用了NEXT  交给之后的req 做动作
+            }
+            if (cgiStdEnd == true) {//cgi 执行已经完成，比如404 这个时候php已经处理完成，cgi结束，但是response 不应该结束，因为调用了NEXT  交给之后的req 做动作
                 return;
             }
             if (responseEnd == false) {
@@ -190,7 +200,7 @@ function server(request, response, params, options, next) {
                 }
 
                 responseEnd = true;
-                next({status:502,stack:'php execute time out'});
+                next({status: 502, stack: 'php execute time out'});
             }
         }, cgiTimeout)//20秒后，如果facgcgi没有 发回响应包，则断开连接
     });
@@ -251,7 +261,7 @@ function server(request, response, params, options, next) {
                 if (responseStatus == "404") { //php返回404后交给next
                     // console.log('cgi is end');
                     cgiStdEnd = true;
-                    next({status:404,stack:'can\'t find php file'});
+                    next({status: 404, stack: 'can\'t find php file'});
                     parser.onRecord = function () {
                     };
                     connection.end();
@@ -282,7 +292,7 @@ function server(request, response, params, options, next) {
                     // console.log('cgi is end ++++++');
                     responseEnd = true;
                     response.end();
-                   
+
                 }
 
             }
@@ -310,7 +320,7 @@ function server(request, response, params, options, next) {
 
             }
             responseEnd = true;
-            next({status:502,stack:'can\'t connection fpm'});
+            next({status: 502, stack: 'can\'t connection fpm'});
         }
         connection.end();
     });
@@ -328,7 +338,7 @@ function getRequestIp(req) {
     return sock.remoteAddress;
     return "";
 }
-function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
+function phpParser(documentRoot, php_self, defIndexScript, cgiConfig) {
     var documentRoot = documentRoot;
     var php_self = php_self;
     var defScript = defIndexScript;
@@ -346,8 +356,8 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
             script_file = "/" + defScript;
         }
         // console.log(script_file);
-        if (path.extname(script_file)!='.php'){
-            script_file = script_file +'/'+ defScript;
+        if (path.extname(script_file) != '.php') {
+            script_file = script_file + '/' + defScript;
         }
 
         if (php_self != '' && php_self != null) { //如果定义了url重写 ，则覆盖自动解析的scriptfile
@@ -355,7 +365,7 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
         }
 
         var qs = url.parse(request.url).query ? url.parse(request.url).query : '';
-        if (!fs.existsSync(script_dir.substr(0, script_dir.length - 1) + script_file)){
+        if (!fs.existsSync(script_dir.substr(0, script_dir.length - 1) + script_file)) {
             next();//文件不存在时，交给之后的处理
             return;
         }
@@ -365,12 +375,12 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
             ["QUERY_STRING", qs],
             ["REQUEST_METHOD", request.method],
             // ["SCRIPT_NAME", script_file], //暂时屏蔽，有他得花 php_self 在php中打印出来不正常
-            ['SERVER_NAME',os.hostname()],
+            ['SERVER_NAME', os.hostname()],
             ["PATH_INFO", script_file],
-            ['SCRIPT_NAME',script_file],
+            ['SCRIPT_NAME', script_file],
             ["DOCUMENT_URI", script_file],
             ["REQUEST_URI", request.url],
-            ["DOCUMENT_ROOT", script_dir.substr(0,script_dir.length-1)],
+            ["DOCUMENT_ROOT", script_dir.substr(0, script_dir.length - 1)],
             ["PHP_SELF", script_file],
             ["GATEWAY_PROTOCOL", "CGI/1.1"],
             ["REMOTE_ADDR", getRequestIp(request)],
@@ -381,8 +391,8 @@ function phpParser(documentRoot, php_self, defIndexScript,cgiConfig) {
     return connectParseFun;
 }
 var phpParse = {
-    ParseFun: function (documentRoot, php_self, defScript,cgiConfig) {
-        return new phpParser(documentRoot, php_self, defScript,cgiConfig)
+    ParseFun: function (documentRoot, php_self, defScript, cgiConfig) {
+        return new phpParser(documentRoot, php_self, defScript, cgiConfig)
     }
 }
 
