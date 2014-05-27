@@ -102,8 +102,6 @@ function server(request, response, params, options, next) {
             var postCacheFileLength = 0;
         }
 
-
-        // console.log('++++++++++' + postCacheFileLength);//
         var testSize = 0;
         var bufferIndex = 0;
 
@@ -140,9 +138,9 @@ function server(request, response, params, options, next) {
                 writeSidinFastCgi(tmpBuffer);
             }
         }
-        try{
+        try {
             fs.close(fd);
-        }catch(e){
+        } catch (e) {
 
         }
         try {
@@ -278,7 +276,7 @@ function server(request, response, params, options, next) {
                 // sidOut = sidOut +1;
                 // console.log(TmpBuffer);
                 // var recordStdoutFileName = 'tmp/data_Stdout_' + sidOut + '_' + timestamp  + '_' + fastCgirecordId +'.txt';
-                //fs.statSync('tmp/sidin.lock'); //同步传输，保证buffer安全
+                fs.statSync('tmp/sidin.lock'); //同步传输，保证buffer安全
                 // var bufferBody = fs.readFileSync(recordStdoutFileName,{'encoding':'binary'});
                 bufferBody = null;
                 response.write(buffer);
@@ -379,6 +377,7 @@ function phpParser(documentRoot, php_self, defIndexScript, cgiConfig) {
             ["PATH_INFO", script_file],
             ['SCRIPT_NAME', script_file],
             ["DOCUMENT_URI", script_file],
+//            [""],
             ["REQUEST_URI", request.url],
             ["DOCUMENT_ROOT", script_dir.substr(0, script_dir.length - 1)],
             ["PHP_SELF", script_file],

@@ -1,4 +1,4 @@
-var crcApp = connect(); //crcapp
+var crcApp = connect();
 crcApp._listenPort = 8080;
 crcApp.use(function (req, res, next) {
     var hosts = req.headers.host.split(':')
@@ -12,19 +12,33 @@ crcApp.use(function (req, res, next) {
         app.def_vhost(req, res, next);
     }
 });
-crcApp.use(connect.static('/var/webroot/crc.artron.net/htdocs/'));//analytics 静态目录
+crcApp.use(connect.static('/data/webroot/crc.artron.net/htdocs/'));//analytics 静态目录
+
+
+crcApp.use(rewriteModule.getMiddleware([
+    {from: '^/([0-9]+)/n([0-9]+)_?([0-9]+)?\.html', to: '/show_news.php?newid=$2&fdate=$1&p=$3'},
+    {from: '^/([0-9]+)/w([0-9]+)_?([0-9]+)?\.html', to: '/show_works.php?newid=$2&fdate=$1&p=$3'},
+    {from: '^/morenews/list([0-9]+)/?p?([0-9]+)?/?$', to: '/morenews.php?column_id=$1&p=$2'},
+    {from: '^/moreworks/list([0-9]+)/?p?([0-9]+)?/?$', to: '/list.php?column_id=$1&p=$2'},
+    {from: '^/storeworks/list([0-9])?/([^/:]+)/?p?([0-9]+)?/?$', to: '/storeworks.php?column_id=$1&keywords=$2&p=$3'}
+])
+);
+
 
 //crcApp.use(connect.logger('dev'));//记录开发的log ，主要为访问什么 ，响应时间是什么
 crcApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法静态找到而重写到php的问题
     var extName = path.extname(url.parse(req.url).pathname);
-    if (extName != '.php' && extName != '' && extName != '.html') {
-        var err = {
-            status: 404,
-            stack: 'file is not found'
-        }
-        next(err);
+    if (extName == '.php' || extName == '' || extName == '.shtml'||extName == '.html') {
+        next();
+        return;
+
     }
-    next();
+    var err = {
+        status: 404,
+        stack: 'file is not found'
+    }
+    next(err);
+    return;
 });
 /**
  **[1] webroot
@@ -33,33 +47,22 @@ crcApp.use(function (req, res, next) {//处理非php的404  如 js css 等无法
  **/
 var phpParseFun = function (req, res, next) {
     res.write('def');
-    res.end();
+    res.end('aaaa');
     next();
 };
-crcApp.use(phpParse.ParseFun('/var/webroot/crc.artron.net/htdocs/', null, 'index.php', {
+crcApp.use(phpParse.ParseFun('/data/webroot/crc.artron.net/htdocs/', null, 'index.php', {
     fastcgiPort: 9001,
     fastcgiHost: '127.0.0.1',
-    fastcgiSock: '/tmp/php-fpm.sock',
+    fastcgiSock: '/dev/shm/php-fpm.sock',
     fastcgiTimeout: 20000
 }));
 crcApp.use(function (req, res, next) {
-    var re = /\/jds(\d){1,10}/i;
-//    console.log(re.test(req.url));
-    if (re.test(req.url) === true) {
-        phpParseFun = phpParse.ParseFun('/var/webroot/jiandingshi.artron.net/', 'index.php', 'index.php', {
-            fastcgiPort: 9001,
-            fastcgiHost: '127.0.0.1',
-            fastcgiSock: '/tmp/php-fpm.sock',
-            fastcgiTimeout: 20000
-        })
-    } else {
-        phpParseFun = phpParse.ParseFun('/var/webroot/crc.artron.net/htdocs/', 'cicrc.php', 'cicrc.php', {
-            fastcgiPort: 9001,
-            fastcgiHost: '127.0.0.1',
-            fastcgiSock: '/tmp/php-fpm.sock',
-            fastcgiTimeout: 20000
-        })
-    }
+    phpParseFun = phpParse.ParseFun('/data/webroot/crc.artron.net/htdocs/', 'cicrc.php', 'cicrc.php', {
+        fastcgiPort: 9001,
+        fastcgiHost: '127.0.0.1',
+        fastcgiSock: '/dev/shm/php-fpm.sock',
+        fastcgiTimeout: 20000
+    })
 
     next();
 });
