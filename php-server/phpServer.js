@@ -273,21 +273,15 @@ function server(request, response, params, options, next) {
             } else if (record.header.type == FCGI_STDOUT && hadheaders) {
 
                 var buffer = new Buffer(record.body);
-                // sidOut = sidOut +1;
-                // console.log(TmpBuffer);
-                // var recordStdoutFileName = 'tmp/data_Stdout_' + sidOut + '_' + timestamp  + '_' + fastCgirecordId +'.txt';
                 fs.statSync('tmp/sidin.lock'); //同步传输，保证buffer安全
-                // var bufferBody = fs.readFileSync(recordStdoutFileName,{'encoding':'binary'});
                 bufferBody = null;
                 response.write(buffer);
-                // fs.unlink(recordStdoutFileName);
 
             } else if (record.header.type == FCGI_STDERR) {
             } else if (record.header.type == FCGI_END) {
                 console.timeEnd('cgi process time');
                 cgiStdEnd = true;
                 if (responseEnd == false) {
-                    // console.log('cgi is end ++++++');
                     responseEnd = true;
                     response.end();
 
