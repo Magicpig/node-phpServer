@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="box" style="position: relative; overflow: hidden; height: 100px; width: 100px;">
+    <div id="images" style="position: absolute; left: 0px; width: 700px;  ">
+
+    </div>
+    <button>上一张</button>
+    <button>下一张</button>
+    <button>暂停</button>
+</div>
+<script language="javascript">
+
+    var s = {
+        images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
+        init: function () {
+            for (var i = 0; i < s.images; i++) {
+                var img = document.createElement("img");
+                img.style.float = "left";
+                document.getElementById("images").appendChild(img);
+            }
+
+        },
+        up: function () {
+
+        },
+        down: function () {
+
+        }
+    }
+    s.init();
+
+
+</script>
+</body>
+</html>

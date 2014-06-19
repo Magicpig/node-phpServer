@@ -274,8 +274,9 @@ function server(request, response, params, options, next) {
 
                 var buffer = new Buffer(record.body);
                 fs.statSync('tmp/sidin.lock'); //同步传输，保证buffer安全
-                bufferBody = null;
+//                response.cork();
                 response.write(buffer);
+//                response.uncork();
 
             } else if (record.header.type == FCGI_STDERR) {
             } else if (record.header.type == FCGI_END) {
